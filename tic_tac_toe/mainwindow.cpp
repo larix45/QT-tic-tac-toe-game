@@ -21,6 +21,7 @@ void MainWindow::on_pushButton_clicked()
 {
     qDebug() << "one_player";
     this->hide();
+    game_screen->game = 1;
     game_screen->show();
 
 }
@@ -29,6 +30,7 @@ void MainWindow::on_pushButton_2_clicked()
 {
     qDebug() << "two_players";
     this->hide();
+    game_screen->game = 2;
     game_screen->show();
 
 }

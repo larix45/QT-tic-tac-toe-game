@@ -14,39 +14,433 @@ gameScreen::~gameScreen()
 }
 void gameScreen::is_winning()
 {
-    if((game_area[1-1] > 5 && game_area[2-1] > 5 && game_area[3-1] > 5) ||
-       (game_area[4-1] > 5 && game_area[5-1] > 5 && game_area[6-1] > 5) ||
-       (game_area[7-1] > 5 && game_area[8-1] > 5 && game_area[9-1] > 5) ||
-       (game_area[1-1] > 5 && game_area[4-1] > 5 && game_area[7-1] > 5) ||
-       (game_area[2-1] > 5 && game_area[5-1] > 5 && game_area[8-1] > 5) ||
-       (game_area[3-1] > 5 && game_area[6-1] > 5 && game_area[9-1] > 5) ||
-       (game_area[1-1] > 5 && game_area[5-1] > 5 && game_area[9-1] > 5) ||
-       (game_area[3-1] > 5 && game_area[5-1] > 5 && game_area[7-1] > 5)
+    ai_stage();
+    if((game_area[1-1] == 10 && game_area[2-1] == 10 && game_area[3-1] == 10) ||
+       (game_area[4-1] == 10 && game_area[5-1] == 10 && game_area[6-1] == 10) ||
+       (game_area[7-1] == 10 && game_area[8-1] == 10 && game_area[9-1] == 10) ||
+       (game_area[1-1] == 10 && game_area[4-1] == 10 && game_area[7-1] == 10) ||
+       (game_area[2-1] == 10 && game_area[5-1] == 10 && game_area[8-1] == 10) ||
+       (game_area[3-1] == 10 && game_area[6-1] == 10 && game_area[9-1] == 10) ||
+       (game_area[1-1] == 10 && game_area[5-1] == 10 && game_area[9-1] == 10) ||
+       (game_area[3-1] == 10 && game_area[5-1] == 10 && game_area[7-1] == 10)
            )
     {
 
         QMessageBox msgBox;
-        if(turn)
-            msgBox.setText("Wygrywa gracz kolko");
-        else
-            msgBox.setText("Wygrywa gracz krzyżyk");
+        msgBox.setText("Wygrywa gracz krzyżyk");
         msgBox.exec();
         QApplication::exit();
     }
-    if(game_area[0] < 5 &&
-       game_area[1] < 5 &&
-       game_area[2] < 5 &&
-       game_area[3] < 5 &&
-       game_area[4] < 5 &&
-       game_area[5] < 5 &&
-       game_area[6] < 5 &&
-       game_area[7] < 5 &&
-       game_area[8] < 5 )
+    else if((game_area[1-1] == 30 && game_area[2-1] == 30 && game_area[3-1] == 30) ||
+            (game_area[4-1] == 30 && game_area[5-1] == 30 && game_area[6-1] == 30) ||
+            (game_area[7-1] == 30 && game_area[8-1] == 30 && game_area[9-1] == 30) ||
+            (game_area[1-1] == 30 && game_area[4-1] == 30 && game_area[7-1] == 30) ||
+            (game_area[2-1] == 30 && game_area[5-1] == 30 && game_area[8-1] == 30) ||
+            (game_area[3-1] == 30 && game_area[6-1] == 30 && game_area[9-1] == 30) ||
+            (game_area[1-1] == 30 && game_area[5-1] == 30 && game_area[9-1] == 30) ||
+            (game_area[3-1] == 30 && game_area[5-1] == 30 && game_area[7-1] == 30)
+               )
+    {
+
+         QMessageBox msgBox;
+         msgBox.setText("Wygrywa gracz kolko");
+         msgBox.exec();
+         QApplication::exit();
+    }
+    if(game_area[1-1] < 5 &&
+       game_area[2-1] < 5 &&
+       game_area[3-1] < 5 &&
+       game_area[4-1] < 5 &&
+       game_area[5-1] < 5 &&
+       game_area[6-1] < 5 &&
+       game_area[7-1] < 5 &&
+       game_area[8-1] < 5 &&
+       game_area[9-1] < 5 )
     {
         QMessageBox msgBox;
         msgBox.setText("Remis");
         msgBox.exec();
         QApplication::exit();
+    }
+}
+void gameScreen::ai_stage()
+{
+    if(game == 1)
+    {
+        //IF I CAN WIN  []
+        //IF I CAN LOSE [x]
+        //PASSIVE       [x]
+
+
+
+        if(game_area[5-1] == 0)
+        {
+            game_area[5-1] = 30;
+            ui->btn5->setText("O");
+        }
+        else
+        {
+            //IF I CAN WIN
+                //FIRST ROW
+            if(game_area[1-1] == 30 && game_area[2-1] == 30 && game_area[3-1] == 0)
+            {
+                game_area[3-1] = 30;
+                ui->btn3->setText("O");
+            }
+            else if(game_area[1-1] == 30 && game_area[2-1] == 0 && game_area[3-1] == 30)
+            {
+                game_area[2-1] = 30;
+                ui->btn2->setText("O");
+            }
+            else if(game_area[1-1] == 0 && game_area[2-1] == 30 && game_area[3-1] == 30)
+            {
+                game_area[1-1] = 30;
+                ui->btn1->setText("O");
+            }
+                //SECOND ROW
+            else if(game_area[4-1] == 30 && game_area[5-1] == 30 && game_area[6-1] == 0)
+            {
+                game_area[6-1] = 30;
+                ui->btn6->setText("O");
+            }
+            else if(game_area[4-1] == 30 && game_area[5-1] == 0 && game_area[6-1] == 30)
+            {
+                game_area[5-1] = 30;
+                ui->btn5->setText("O");
+            }
+            else if(game_area[4-1] == 0 && game_area[5-1] == 30 && game_area[6-1] == 30)
+            {
+                game_area[4-1] = 30;
+                ui->btn4->setText("O");
+            }
+                //THIRD ROW
+            else if(game_area[7-1] == 30 && game_area[8-1] == 30 && game_area[9-1] == 0)
+            {
+                game_area[9-1] = 30;
+                ui->btn9->setText("O");
+            }
+            else if(game_area[7-1] == 30 && game_area[8-1] == 0 && game_area[9-1] == 30)
+            {
+                game_area[8-1] = 30;
+                ui->btn8->setText("O");
+            }
+            else if(game_area[7-1] == 0 && game_area[8-1] == 30 && game_area[9-1] == 30)
+            {
+                game_area[7-1] = 30;
+                ui->btn7->setText("O");
+            }
+                //FIRST COLUMN
+            else if(game_area[1-1] == 30 && game_area[4-1] == 30 && game_area[7-1] == 0)
+            {
+                game_area[7-1] = 30;
+                ui->btn7->setText("O");
+            }
+            else if(game_area[1-1] == 30 && game_area[4-1] == 0 && game_area[7-1] == 30)
+            {
+                game_area[4-1] = 30;
+                ui->btn4->setText("O");
+            }
+            else if(game_area[1-1] == 0 && game_area[4-1] == 30 && game_area[7-1] == 30)
+            {
+                game_area[1-1] = 30;
+                ui->btn1->setText("O");
+            }
+                //SECOND COLUMN
+            else if(game_area[2-1] == 30 && game_area[5-1] == 30 && game_area[8-1] == 0)
+            {
+                game_area[8-1] = 30;
+                ui->btn8->setText("O");
+            }
+            else if(game_area[2-1] == 30 && game_area[5-1] == 0 && game_area[8-1] == 30)
+            {
+                game_area[5-1] = 30;
+                ui->btn5->setText("O");
+            }
+            else if(game_area[2-1] == 0 && game_area[5-1] == 30 && game_area[8-1] == 30)
+            {
+                game_area[2-1] = 30;
+                ui->btn2->setText("O");
+            }
+                //THIRD COLUMN
+            else if(game_area[3-1] == 30 && game_area[6-1] == 30 && game_area[9-1] == 0)
+            {
+                game_area[9-1] = 30;
+                ui->btn9->setText("O");
+            }
+            else if(game_area[3-1] == 30 && game_area[6-1] == 0 && game_area[9-1] == 30)
+            {
+                game_area[6-1] = 30;
+                ui->btn6->setText("O");
+            }
+            else if(game_area[3-1] == 0 && game_area[6-1] == 30 && game_area[9-1] == 30)
+            {
+                game_area[3-1] = 30;
+                ui->btn3->setText("O");
+            }
+                //X CROSS
+            else if(game_area[1-1] == 30 && game_area[5-1] == 30 && game_area[9-1] == 0)
+            {
+                game_area[9-1] = 30;
+                ui->btn9->setText("O");
+            }
+            else if(game_area[1-1] == 30 && game_area[5-1] == 0 && game_area[9-1] == 30)
+            {
+                game_area[5-1] = 30;
+                ui->btn5->setText("O");
+            }
+            else if(game_area[1-1] == 0 && game_area[5-1] == 30 && game_area[9-1] == 30)
+            {
+                game_area[1-1] = 30;
+                ui->btn1->setText("O");
+            }
+            else if(game_area[3-1] == 30 && game_area[5-1] == 30 && game_area[7-1] == 0)
+            {
+                game_area[7-1] = 30;
+                ui->btn7->setText("O");
+            }
+            else if(game_area[3-1] == 30 && game_area[5-1] == 0 && game_area[7-1] == 30)
+            {
+                game_area[5-1] = 30;
+                ui->btn5->setText("O");
+            }
+            else if(game_area[3-1] == 0 && game_area[5-1] == 30 && game_area[7-1] == 30)
+            {
+                game_area[3-1] = 30;
+                ui->btn3->setText("O");
+            }
+
+
+
+            //IF I CAN LOSE
+            if(game_area[1-1] == 10 && game_area[2-1] == 10 && game_area[3-1] == 0)
+            {
+                game_area[3-1] = 30;
+                ui->btn3->setText("O");
+            }
+            else if(game_area[1-1] == 10 && game_area[2-1] == 0 && game_area[3-1] == 10)
+            {
+                game_area[2-1] = 30;
+                ui->btn2->setText("O");
+            }
+            else if(game_area[1-1] == 0 && game_area[2-1] == 10 && game_area[3-1] == 10)
+            {
+                game_area[1-1] = 30;
+                ui->btn1->setText("O");
+            }
+                //SECOND ROW
+            else if(game_area[4-1] == 10 && game_area[5-1] == 10 && game_area[6-1] == 0)
+            {
+                game_area[6-1] = 30;
+                ui->btn6->setText("O");
+            }
+            else if(game_area[4-1] == 10 && game_area[5-1] == 0 && game_area[6-1] == 10)
+            {
+                game_area[5-1] = 30;
+                ui->btn5->setText("O");
+            }
+            else if(game_area[4-1] == 0 && game_area[5-1] == 10 && game_area[6-1] == 10)
+            {
+                game_area[4-1] = 30;
+                ui->btn4->setText("O");
+            }
+                //THIRD ROW
+            else if(game_area[7-1] == 10 && game_area[8-1] == 10 && game_area[9-1] == 0)
+            {
+                game_area[9-1] = 30;
+                ui->btn9->setText("O");
+            }
+            else if(game_area[7-1] == 10 && game_area[8-1] == 0 && game_area[9-1] == 10)
+            {
+                game_area[8-1] = 30;
+                ui->btn8->setText("O");
+            }
+            else if(game_area[7-1] == 0 && game_area[8-1] == 10 && game_area[9-1] == 10)
+            {
+                game_area[7-1] = 30;
+                ui->btn7->setText("O");
+            }
+                //FIRST COLUMN
+            else if(game_area[1-1] == 10 && game_area[4-1] == 10 && game_area[7-1] == 0)
+            {
+                game_area[7-1] = 30;
+                ui->btn7->setText("O");
+            }
+            else if(game_area[1-1] == 10 && game_area[4-1] == 0 && game_area[7-1] == 10)
+            {
+                game_area[4-1] = 30;
+                ui->btn4->setText("O");
+            }
+            else if(game_area[1-1] == 0 && game_area[4-1] == 10 && game_area[7-1] == 10)
+            {
+                game_area[1-1] = 30;
+                ui->btn1->setText("O");
+            }
+                //SECOND COLUMN
+            else if(game_area[2-1] == 10 && game_area[5-1] == 10 && game_area[8-1] == 0)
+            {
+                game_area[8-1] = 30;
+                ui->btn8->setText("O");
+            }
+            else if(game_area[2-1] == 10 && game_area[5-1] == 0 && game_area[8-1] == 10)
+            {
+                game_area[5-1] = 30;
+                ui->btn5->setText("O");
+            }
+            else if(game_area[2-1] == 0 && game_area[5-1] == 10 && game_area[8-1] == 10)
+            {
+                game_area[2-1] = 30;
+                ui->btn2->setText("O");
+            }
+                //THIRD COLUMN
+            else if(game_area[3-1] == 10 && game_area[6-1] == 10 && game_area[9-1] == 0)
+            {
+                game_area[9-1] = 30;
+                ui->btn9->setText("O");
+            }
+            else if(game_area[3-1] == 10 && game_area[6-1] == 0 && game_area[9-1] == 10)
+            {
+                game_area[6-1] = 30;
+                ui->btn6->setText("O");
+            }
+            else if(game_area[3-1] == 0 && game_area[6-1] == 10 && game_area[9-1] == 10)
+            {
+                game_area[3-1] = 30;
+                ui->btn3->setText("O");
+            }
+                //X CROSS
+            else if(game_area[1-1] == 10 && game_area[5-1] == 10 && game_area[9-1] == 0)
+            {
+                game_area[9-1] = 30;
+                ui->btn9->setText("O");
+            }
+            else if(game_area[1-1] == 10 && game_area[5-1] == 0 && game_area[9-1] == 10)
+            {
+                game_area[5-1] = 30;
+                ui->btn5->setText("O");
+            }
+            else if(game_area[1-1] == 0 && game_area[5-1] == 10 && game_area[9-1] == 10)
+            {
+                game_area[1-1] = 30;
+                ui->btn1->setText("O");
+            }
+            else if(game_area[3-1] == 10 && game_area[5-1] == 10 && game_area[7-1] == 0)
+            {
+                game_area[7-1] = 30;
+                ui->btn7->setText("O");
+            }
+            else if(game_area[3-1] == 10 && game_area[5-1] == 0 && game_area[7-1] == 10)
+            {
+                game_area[5-1] = 30;
+                ui->btn5->setText("O");
+            }
+            else if(game_area[3-1] == 0 && game_area[5-1] == 10 && game_area[7-1] == 10)
+            {
+                game_area[3-1] = 30;
+                ui->btn3->setText("O");
+            }
+
+
+
+
+
+
+            if(game_area[5-1] == 10)
+            {
+                if(game_area[1-1] == 10 && game_area[9-1] == 0)
+                {
+                    game_area[9-1] = 30;
+                    ui->btn9->setText("O");
+                }
+                else if(game_area[3-1] == 10 && game_area[7-1] == 0)
+                {
+                    game_area[7-1] = 30;
+                    ui->btn7->setText("O");
+                }
+                else if(game_area[7-1] == 10 && game_area[3-1] == 0)
+                {
+                    game_area[3-1] = 30;
+                    ui->btn3->setText("O");
+                }
+                else if(game_area[9-1] == 10 && game_area[1-1] == 0)
+                {
+                    game_area[1-1] = 30;
+                    ui->btn1->setText("O");
+                }
+                else if(game_area[2-1] == 10 && game_area[8-1] == 0)
+                {
+                    game_area[8-1] = 30;
+                    ui->btn8->setText("O");
+                }
+                else if(game_area[8-1] == 10 && game_area[2-1] == 0)
+                {
+                    game_area[2-1] = 30;
+                    ui->btn2->setText("O");
+                }
+                else if(game_area[4-1] == 10 && game_area[6-1] == 0)
+                {
+                    game_area[6-1] = 30;
+                    ui->btn6->setText("O");
+                }
+                else if(game_area[6-1] == 10 && game_area[4-1] == 0)
+                {
+                    game_area[4-1] = 30;
+                    ui->btn4->setText("O");
+                }
+            }
+            else//PASSIVE MOVES
+            {
+                if(game_area[1-1] == 0)
+                {
+                    game_area[1-1] = 30;
+                    ui->btn1->setText("O");
+                }
+                else if(game_area[2-1] == 0)
+                {
+                    game_area[2-1] = 30;
+                    ui->btn2->setText("O");
+                }
+                else if(game_area[3-1] == 0)
+                {
+                    game_area[3-1] = 30;
+                    ui->btn3->setText("O");
+                }
+                else if(game_area[4-1] == 0)
+                {
+                    game_area[4-1] = 30;
+                    ui->btn4->setText("O");
+                }
+                else if(game_area[6-1] == 0)
+                {
+                    game_area[6-1] = 30;
+                    ui->btn6->setText("O");
+                }
+                else if(game_area[7-1] == 0)
+                {
+                    game_area[7-1] = 30;
+                    ui->btn7->setText("O");
+                }
+                else if(game_area[8-1] == 0)
+                {
+                    game_area[8-1] = 30;
+                    ui->btn8->setText("O");
+                }
+                else if(game_area[9-1] == 0)
+                {
+                    game_area[9-1] = 30;
+                    ui->btn9->setText("O");
+                }
+            }
+            /*
+             * [1][2][3]
+             * [4][5][6]
+             * [7][8][9]
+             */
+        }
+
+
+
+
+        turn = !turn;
     }
 }
 void gameScreen::on_btn1_clicked()

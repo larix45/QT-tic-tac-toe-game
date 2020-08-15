@@ -17,6 +17,22 @@ public:
     explicit gameScreen(QWidget *parent = nullptr);
     ~gameScreen();
 
+
+
+
+
+
+
+
+    char game = 0;
+    /**
+    game
+    1 =  ai_game
+    2 = PvP
+    3 = network game host
+    4 = network game join
+    **/
+
 private slots:
     void on_btn8_clicked();
 
@@ -41,6 +57,7 @@ private:
     char game_area[9] = {0,0,0,0,0,0,0,0,0};
     bool turn = true;
     void is_winning();
+    void ai_stage();
 
 };
 
